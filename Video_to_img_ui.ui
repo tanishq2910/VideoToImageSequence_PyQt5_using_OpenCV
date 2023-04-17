@@ -108,7 +108,7 @@ p, li { white-space: pre-wrap; }
      </rect>
     </property>
     <property name="text">
-     <string>Selected video will be converted into image sequence:</string>
+     <string>Selected video will be converted into image sequence: </string>
     </property>
    </widget>
    <widget class="QLabel" name="label_2">
