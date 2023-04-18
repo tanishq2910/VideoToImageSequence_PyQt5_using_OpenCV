@@ -7,6 +7,9 @@ import cv2
 class UI(QMainWindow):
     def __init__(self):
         super(UI, self).__init__()
+        
+        global cv_folder
+        global cv_file
 
         uic.loadUi("D:\pyqt5\Video to image sequence\Video_to_img_ui.ui", self)
         
@@ -41,7 +44,7 @@ class UI(QMainWindow):
 
         if file_path:
             self.path_sv.setText(file_path[0])
-        global cv_file
+        
         cv_file= self.path_sv.toPlainText()
     
     def path_sv_clear(self):
@@ -51,14 +54,14 @@ class UI(QMainWindow):
         folder_path = QFileDialog.getExistingDirectory(None, "Select Folder")
         if folder_path:
             self.path_sf.setText(folder_path)
-        global cv_folder 
+         
         cv_folder= self.path_sf.toPlainText()
 
     def cwd_store(self):
         folder_path =os.getcwd()
         if folder_path:
             self.path_sf.setText(folder_path)
-        global cv_folder
+        
         cv_folder= self.path_sf.toPlainText()
     
     def path_sf_clear(self):
