@@ -8,9 +8,9 @@ class UI(QMainWindow):
     def __init__(self):
         super(UI, self).__init__()
 
-        uic.loadUi("D:\pyqt5\Video to image sequence\Video_to_img_ui.ui", self)
+        uic.loadUi("Video_to_img_ui.ui", self)
         
-        #Defining custom widgets for vriddhi (sv- select video, sf- seleect folder)
+        #Defining custom widgets for vriddhi (sv- select video, sf- select folder)
         self.button_sv = self.findChild(QPushButton,"pushButton")
         self.path_sv = self.findChild(QTextEdit,"textEdit")
         self.cancel_sv = self.findChild(QPushButton,"pushButton_2")
