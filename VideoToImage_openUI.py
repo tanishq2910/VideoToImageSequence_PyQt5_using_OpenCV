@@ -22,7 +22,6 @@ class UI(QMainWindow):
         self.execute = self.findChild(QPushButton,"pushButton_5")
         self.outputlabel = self.findChild(QLabel,"label_3")
         
-
         #Actions:
         self.button_sv.clicked.connect(self.video_get)#actions for both select video and path_sv are included
         self.cancel_sv.clicked.connect(self.path_sv_clear)
