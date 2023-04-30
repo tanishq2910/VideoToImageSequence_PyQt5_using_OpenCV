@@ -86,7 +86,6 @@ class UI(QMainWindow):
         except:
             self.outputlabel.setText(f'Invalid selections')
 
-
 app = QApplication(sys.argv)
 UIWindow = UI()
 app.exec_()
