@@ -83,6 +83,14 @@ class UI(QMainWindow):
         #print(type(cv_file))
         #print(cv_file)
             self.outputlabel.setText(f'Saved sucessfully!!!!')
+            
+            # runs model after app execution is terminated
+            images_path = cv_folder+"/*"
+            model_path = 'models/ESRGAN/models/RRDB_ESRGAN_x4.pth'
+            ie.enhance_image(images_path, model_path)
+            
+            self.outputlabel.setText(f'Enhanced images saved!!!')
+            
         except:
             self.outputlabel.setText(f'Invalid selections')
 
@@ -90,8 +98,3 @@ class UI(QMainWindow):
 app = QApplication(sys.argv)
 UIWindow = UI()
 app.exec_()
-
-# runs model after app execution is terminated
-images_path = cv_folder+"/*"
-model_path = 'models/ESRGAN/models/RRDB_ESRGAN_x4.pth'
-ie.enhance_image(images_path, model_path)
