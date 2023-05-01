@@ -1,4 +1,5 @@
 from PyQt5.QtWidgets import QMainWindow,QApplication, QLabel, QTextEdit,QPushButton, QFileDialog
+from models.ESRGAN import image_enhancer as ie
 from PyQt5 import uic
 import sys
 import os
@@ -8,7 +9,7 @@ class UI(QMainWindow):
     def __init__(self):
         super(UI, self).__init__()
 
-        uic.loadUi("Video_to_img_ui.ui", self)
+        uic.loadUi("UI/app_ui.ui", self)
         
         #Defining custom widgets for vriddhi (sv- select video, sf- select folder)
         self.button_sv = self.findChild(QPushButton,"pushButton")
@@ -89,3 +90,8 @@ class UI(QMainWindow):
 app = QApplication(sys.argv)
 UIWindow = UI()
 app.exec_()
+
+# runs model after app execution is terminated
+images_path = cv_folder+"/*"
+model_path = 'models/ESRGAN/models/RRDB_ESRGAN_x4.pth'
+ie.enhance_image(images_path, model_path)
