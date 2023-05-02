@@ -2,6 +2,7 @@
 .vscode
 frames
 footage
+results
 
 # file type
 *.svg
