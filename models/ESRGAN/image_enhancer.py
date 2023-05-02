@@ -37,4 +37,4 @@ def enhance_image(test_img_folder, model_path):
             output = model(img_LR).data.squeeze().float().cpu().clamp_(0, 1).numpy()
         output = np.transpose(output[[2, 1, 0], :, :], (1, 2, 0))
         output = (output * 255.0).round()
-        cv2.imwrite('results/{:s}_rlt.png'.format(base), output)
+        cv2.imwrite('results/{:s}.png'.format(base), output)

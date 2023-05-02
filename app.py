@@ -1,11 +1,13 @@
 from PyQt5.QtWidgets import QMainWindow,QApplication, QLabel, QTextEdit,QPushButton, QFileDialog
 from models.ESRGAN import image_enhancer as ie
+from video_processing import img_to_vid as i2v
 from PyQt5 import uic
 import sys
 import os
 import cv2
 
 class UI(QMainWindow):
+    fps=None
     def __init__(self):
         super(UI, self).__init__()
 
@@ -68,6 +70,7 @@ class UI(QMainWindow):
     def run(self):
         try:
             cap= cv2.VideoCapture(cv_file)
+            UI.fps = cap.get(cv2.CAP_PROP_FPS)
             i=0
             path=cv_folder
             while(cap.isOpened()):
@@ -90,8 +93,10 @@ class UI(QMainWindow):
 app = QApplication(sys.argv)
 UIWindow = UI()
 app.exec_()
+# print(UI.fps)
 
 # runs model after app execution is terminated
 images_path = cv_folder+"/*"
 model_path = 'models/ESRGAN/models/RRDB_ESRGAN_x4.pth'
 ie.enhance_image(images_path, model_path)
+i2v.img_to_vid(UI.fps)
