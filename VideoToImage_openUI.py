@@ -66,6 +66,7 @@ class UI(QMainWindow):
 
     def run(self):
         try:
+            self.outputlabel.setText(f'Converting...')
             cap= cv2.VideoCapture(cv_file)
             i=0
             path=cv_folder
