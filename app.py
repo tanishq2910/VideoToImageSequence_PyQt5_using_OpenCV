@@ -1,11 +1,10 @@
 from PyQt5.QtWidgets import QMainWindow,QApplication, QLabel, QTextEdit,QPushButton, QFileDialog
 from models.ESRGAN import image_enhancer as ie
 from video_processing import img_to_vid as i2v
+from video_processing import vid_to_img as v2i
 from PyQt5 import uic
 import sys
 import os
-import cv2
-
 class UI(QMainWindow):
     fps=None
     def __init__(self):
@@ -23,7 +22,6 @@ class UI(QMainWindow):
         self.cancel_sf = self.findChild(QPushButton,"pushButton_4")
         self.execute = self.findChild(QPushButton,"pushButton_5")
         self.outputlabel = self.findChild(QLabel,"label_3")
-        
 
         #Actions:
         self.button_sv.clicked.connect(self.video_get)#actions for both select video and path_sv are included
@@ -69,34 +67,18 @@ class UI(QMainWindow):
 
     def run(self):
         try:
-            cap= cv2.VideoCapture(cv_file)
-            UI.fps = cap.get(cv2.CAP_PROP_FPS)
-            i=0
-            path=cv_folder
-            while(cap.isOpened()):
-                ret, frame = cap.read()
-                if ret == False:
-                    break
-                #cv2.imwrite(os.path.join(path , 'waka.jpg'), img)
-                cv2.imwrite(os.path.join(path,'Snap'+str(i)+'.jpg'),frame)
-                i+=1
-            cap.release()
-            cv2.destroyAllWindows()
-        #self.outputlabel.setText(f'Video taken was: {cv_file}')
-        #print(type(cv_file))
-        #print(cv_file)
+            v2i.vid_to_img(cv_file, cv_folder)
             self.outputlabel.setText(f'Saved sucessfully!!!!')
+            # runs model after app execution is terminated
+            model_path = 'models/ESRGAN/models/RRDB_ESRGAN_x4.pth'
+            images_path = cv_folder+"/*"
+            ie.enhance_image(images_path, model_path)
+            # enhanced images converted to video
+            i2v.img_to_vid(UI.fps)
+            self.outputlabel.setText(f'Enhancement Successful!!!!')
         except:
             self.outputlabel.setText(f'Invalid selections')
-
 
 app = QApplication(sys.argv)
 UIWindow = UI()
 app.exec_()
-# print(UI.fps)
-
-# runs model after app execution is terminated
-images_path = cv_folder+"/*"
-model_path = 'models/ESRGAN/models/RRDB_ESRGAN_x4.pth'
-ie.enhance_image(images_path, model_path)
-i2v.img_to_vid(UI.fps)

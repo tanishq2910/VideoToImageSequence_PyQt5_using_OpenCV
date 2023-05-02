@@ -1,9 +1,6 @@
 import cv2
 import os
 
-# # Set the frame rate
-# frame_rate = 30
-
 def img_to_vid(frame_rate):
     # Set the directory containing the images
     image_folder = 'D:/Projects/Major Project/Vriddhi/vriddhi/results'
