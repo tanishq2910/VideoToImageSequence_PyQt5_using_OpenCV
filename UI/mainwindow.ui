@@ -11,7 +11,11 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Enhancement</string>
+   <string>Video resolution enhancer: Vriddhi</string>
+  </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>Vridhi_icon.jpg</normaloff>Vridhi_icon.jpg</iconset>
   </property>
   <property name="styleSheet">
    <string notr="true">background-color: rgb(146, 184, 255);</string>
