@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Video resolution enhancer: Vriddhi</string>
+   <string>Vriddhi: Resolution Enhancer</string>
   </property>
   <property name="windowIcon">
    <iconset>
@@ -34,7 +34,7 @@
      <string>Enhance Image</string>
     </property>
     <property name="styleSheet">
-    <string notr="true">background-color: #e0ffff;</string>
+    <string notr="true">background-color: #89fafa;</string>
     </property>
    </widget>
    <widget class="QPushButton" name="btnEnhanceVideo">
@@ -50,7 +50,7 @@
      <string>Enhance Video</string>
     </property>
     <property name="styleSheet">
-    <string notr="true">background-color: #e0ffff;</string>
+    <string notr="true">background-color: #89fafa;</string>
     </property>
    </widget>
   </widget>

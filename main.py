@@ -37,7 +37,7 @@ class VideoWindow(QMainWindow):
     def __init__(self):
         # super(VideoWindow, self).__init__()
         super(VideoWindow, self).__init__()
-        uic.loadUi("UI/app_ui.ui", self)
+        uic.loadUi("UI/videowindow.ui", self)
         
         #Defining custom widgets for vriddhi (sv- select video, sf- select folder)
         self.button_sv = self.findChild(QPushButton,"pushButton")
