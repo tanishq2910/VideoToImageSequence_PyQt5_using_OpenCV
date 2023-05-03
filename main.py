@@ -15,28 +15,87 @@ class MainWindow(QMainWindow):
         self.btnEnhanceVideo.clicked.connect(self.openVideoWindow)
 
     def openImageWindow(self):
-        image_window = ImageWindow()
-        image_window.show()
+        self.window= QMainWindow()
+        self.window = imageWindow()
+        self.window.show()
 
     def openVideoWindow(self):
-        # self.close()
-        # video_window = VideoWindow()
-        # video_window.show()
         self.window= QMainWindow()
-        self.window = VideoWindow()
-        #self.window.textEdit.setText(cv_folder)
+        self.window = videoWindow()
         self.window.show()
-class ImageWindow(QMainWindow):
+class imageWindow(QMainWindow):
     def __init__(self):
-        super().__init__()
-        self.setWindowTitle("Enhance Image")
-        self.setGeometry(200, 200, 400, 300)
+        super(imageWindow, self).__init__()
 
-class VideoWindow(QMainWindow):
+        uic.loadUi("UI/imagewindow.ui", self)
+
+        # Defining custom widgets for vriddhi (si- select image, sf- select folder)
+        self.button_si = self.findChild(QPushButton, "pushButton")
+        self.path_si = self.findChild(QTextEdit, "textEdit")
+        self.cancel_si = self.findChild(QPushButton, "pushButton_2")
+        self.button_sf = self.findChild(QPushButton, "pushButton_3")
+        self.cwd = self.findChild(QPushButton, "pushButton_6")
+        self.path_sf = self.findChild(QTextEdit, "textEdit_2")
+        self.cancel_sf = self.findChild(QPushButton, "pushButton_4")
+        self.execute = self.findChild(QPushButton, "pushButton_5")
+        self.outputlabel = self.findChild(QLabel, "label_3")
+
+        # Actions:
+        self.button_si.clicked.connect(self.image_get)
+        self.cancel_si.clicked.connect(self.path_si_clear)
+
+        self.button_sf.clicked.connect(self.folder_get)
+        self.cwd.clicked.connect(self.cwd_store)
+        self.cancel_sf.clicked.connect(self.path_sf_clear)
+
+        self.execute.clicked.connect(self.run)
+
+        # show app
+        self.show()
+
+    # Functions:
+    def image_get(self):
+        file_path = QFileDialog.getOpenFileName(self, "Selected images will be enhanced:", ".", "Image Files (*.png *.jpg *.jpeg)")
+        if file_path:
+            self.path_si.setText(file_path[0])
+        global cv_file
+        cv_file = self.path_si.toPlainText()
+
+    def path_si_clear(self):
+        self.path_si.setText("")
+
+    def folder_get(self):
+        folder_path = QFileDialog.getExistingDirectory(None, "Select Folder")
+        if folder_path:
+            self.path_sf.setText(folder_path)
+        global cv_folder
+        cv_folder = self.path_sf.toPlainText()
+
+    def cwd_store(self):
+        folder_path = os.getcwd()
+        if folder_path:
+            self.path_sf.setText(folder_path)
+        global cv_folder
+        cv_folder = self.path_sf.toPlainText()
+
+    def path_sf_clear(self):
+        self.path_sf.setText("")
+
+    def run(self):
+        try:
+            # runs model after app execution is terminated
+            model_path = 'models/ESRGAN/models/RRDB_ESRGAN_x4.pth'
+            images_path = cv_file
+            ie.enhance_image(images_path, model_path, output_path=cv_folder)
+            self.outputlabel.setText(f'Enhancement Successful!!!!')
+        except:
+            self.outputlabel.setText(f'Invalid selections')
+
+class videoWindow(QMainWindow):
     fps=None
     def __init__(self):
         # super(VideoWindow, self).__init__()
-        super(VideoWindow, self).__init__()
+        super(videoWindow, self).__init__()
         uic.loadUi("UI/videowindow.ui", self)
         
         #Defining custom widgets for vriddhi (sv- select video, sf- select folder)
@@ -101,7 +160,7 @@ class VideoWindow(QMainWindow):
             images_path = cv_folder+"/*"
             ie.enhance_image(images_path, model_path)
             # enhanced images converted to video
-            i2v.img_to_vid(VideoWindow.fps)
+            i2v.img_to_vid(videoWindow.fps)
             self.outputlabel.setText(f'Enhancement Successful!!!!')
         except:
             self.outputlabel.setText(f'Invalid selections')

@@ -5,12 +5,12 @@ from video_processing import vid_to_img as v2i
 from PyQt5 import uic
 import sys
 import os
-class UI(QMainWindow):
+class videoWindow(QMainWindow):
     fps=None
     def __init__(self):
-        super(UI, self).__init__()
+        super(videoWindow, self).__init__()
 
-        uic.loadUi("UI/app_ui.ui", self)
+        uic.loadUi("UI/videowindow.ui", self)
         
         #Defining custom widgets for vriddhi (sv- select video, sf- select folder)
         self.button_sv = self.findChild(QPushButton,"pushButton")
@@ -74,11 +74,12 @@ class UI(QMainWindow):
             images_path = cv_folder+"/*"
             ie.enhance_image(images_path, model_path)
             # enhanced images converted to video
-            i2v.img_to_vid(UI.fps)
+            i2v.img_to_vid(videoWindow.fps)
             self.outputlabel.setText(f'Enhancement Successful!!!!')
         except:
             self.outputlabel.setText(f'Invalid selections')
 
-app = QApplication(sys.argv)
-UIWindow = UI()
-app.exec_()
+if __name__=='__main__':
+    app = QApplication(sys.argv)
+    videoWindow = videoWindow()
+    app.exec_()
