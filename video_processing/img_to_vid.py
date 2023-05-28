@@ -1,13 +1,14 @@
 import cv2
 import os
 
+
 def img_to_vid(frame_rate):
     # Set the directory containing the images
-    image_folder = 'D:/Projects/Major Project/Vriddhi/vriddhi/results'
+    image_folder = "D:/Projects/Major Project/Vriddhi/vriddhi/results"
     # image_folder = '../results'
 
     # Set the video name and format
-    video_name = 'D:/Projects/Major Project/Vriddhi/vriddhi/results/enhanced_video.mp4'
+    video_name = "D:/Projects/Major Project/Vriddhi/vriddhi/results/enhanced_video.mp4"
     # video_name = '../results/enhanced_video.mp4'
 
     # Get the frame size from the first image in the folder
@@ -15,7 +16,10 @@ def img_to_vid(frame_rate):
     frame_size = (first_image.shape[1], first_image.shape[0])
 
     # Create a list of all the image file names
-    images = sorted([img for img in os.listdir(image_folder) if img.startswith('Snap')], key=lambda x: int(x.split('Snap')[1].split('.png')[0]))
+    images = sorted(
+        [img for img in os.listdir(image_folder) if img.startswith("Snap")],
+        key=lambda x: int(x.split("Snap")[1].split(".png")[0]),
+    )
     print(images)
 
     # Create a video writer object
@@ -31,3 +35,7 @@ def img_to_vid(frame_rate):
     # Release the video writer object and close all windows
     video.release()
     cv2.destroyAllWindows()
+
+
+if __name__ == "__main__":
+    img_to_vid(25)

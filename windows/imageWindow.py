@@ -1,4 +1,12 @@
-from PyQt5.QtWidgets import QMainWindow, QApplication, QLabel, QTextEdit, QPushButton, QFileDialog
+from PyQt5.QtWidgets import (
+    QMainWindow,
+    QApplication,
+    QLabel,
+    QTextEdit,
+    QPushButton,
+    QFileDialog,
+)
+
 # from models.ESRGAN import image_enhancer as ie
 from ..models.ESRGAN import image_enhancer as ie
 from PyQt5 import uic
@@ -6,10 +14,9 @@ import sys
 import os
 
 
-class ImageWindow(QMainWindow):
-
+class imageWindow(QMainWindow):
     def __init__(self):
-        super(ImageWindow, self).__init__()
+        super(imageWindow, self).__init__()
 
         uic.loadUi("UI/imagewindow.ui", self)
 
@@ -39,7 +46,12 @@ class ImageWindow(QMainWindow):
 
     # Functions:
     def image_get(self):
-        file_path = QFileDialog.getOpenFileName(self, "Selected images will be enhanced:", ".", "Image Files (*.png *.jpg *.jpeg)")
+        file_path = QFileDialog.getOpenFileName(
+            self,
+            "Selected images will be enhanced:",
+            ".",
+            "Image Files (*.png *.jpg *.jpeg)",
+        )
         if file_path:
             self.path_si.setText(file_path[0])
         global cv_file
@@ -68,15 +80,15 @@ class ImageWindow(QMainWindow):
     def run(self):
         try:
             # runs model after app execution is terminated
-            model_path = 'models/ESRGAN/models/RRDB_ESRGAN_x4.pth'
+            model_path = "models/ESRGAN/models/RRDB_ESRGAN_x4.pth"
             images_path = cv_file
             ie.enhance_image(images_path, model_path, output_path=cv_folder)
-            self.outputlabel.setText(f'Enhancement Successful!!!!')
+            self.outputlabel.setText(f"Enhancement Successful!!!!")
         except:
-            self.outputlabel.setText(f'Invalid selections')
+            self.outputlabel.setText(f"Invalid selections")
 
 
-if __name__=='__main__':
+if __name__ == "__main__":
     app = QApplication(sys.argv)
-    ImageWindow = ImageWindow()
+    ImageWindow = imageWindow()
     app.exec_()
